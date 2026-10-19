@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Teduh – Dunia Santai</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="top">
+        <span class="pill">🌿<span class="bt"> Teduh</span></span
+        ><span class="pill" id="on">⚪ Solo</span><span class="sp"></span><span class="pill" id="co"></span
+        ><span class="pill" id="tk"></span><span class="pill" id="time">🌅 Pagi</span
+        ><span class="pill" id="weather">☀️ Cerah</span
+        ><button id="au" onclick="auPanel()" aria-label="Suara" title="Suara">🔇</button
+        ><button onclick="showEventInfo()" aria-label="Event" title="Event">📅</button
+        ><button onclick="togglePhotoMode()" aria-label="Mode foto" title="Foto">📸</button
+        ><button onclick="showEmoteMenu()" aria-label="Emote" title="Emote">😊</button
+        ><button id="mb" aria-label="Check-in mood">😊<span class="ml"> Mood</span></button
+        ><button class="w" onclick="sos()" aria-label="Bantuan segera">🆘</button>
+      </div>
+      <div id="main">
+        <div id="gm">
+          <div id="cvw"><canvas id="cv"></canvas></div>
+          <div id="act"></div>
+        </div>
+        <div id="sd">
+          <div class="tabs">
+            <button data-t="m" class="on">Misi</button><button data-t="s">Toko</button
+            ><button data-t="k">Konsul</button><button data-t="c">Obrolan</button
+            ><button data-t="b">Bantuan</button>
+          </div>
+          <div id="pn"></div>
+          <p class="mut" id="hint"></p>
+        </div>
+      </div>
+    </div>
+    <div id="rg"><div id="rc"></div></div>
+    <div id="mo"><div id="md"></div></div>
+    <div id="toast"></div>
+    <script src="js/core.js"></script>
+    <script src="js/time.js"></script>
+    <script src="js/world.js"></script>
+    <script src="js/canvas.js"></script>
+    <script src="js/character.js"></script>
+    <script src="js/interact.js"></script>
+    <script src="js/fishing.js"></script>
+    <script src="js/music.js"></script>
+    <script src="js/stage.js"></script>
+    <script src="js/places.js"></script>
+    <script src="js/loop.js"></script>
+    <script src="js/dialogs.js"></script>
+    <script src="js/economy.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/register.js"></script>
+    <script src="js/net.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/quests.js"></script>
+    <script src="js/friendship.js"></script>
+    <script src="js/cooking.js"></script>
+    <script src="js/photo.js"></script>
+    <script src="js/emote.js"></script>
+    <script src="js/house.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/rest.js"></script>
+    <script src="js/moodcheck.js"></script>
+    <script src="js/parental.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

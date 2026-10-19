@@ -1,0 +1,14 @@
+{
+  "name": "teduh-game",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Teduh: game sosial santai dengan pencegahan kecanduan dan jalur ke bantuan profesional",
+  "scripts": {
+    "dev": "npx --yes serve . -l 5173",
+    "server": "node server/server.js",
+    "start": "node server/server.js",
+    "format": "npx --yes prettier --write \"js/**/*.js\" css index.html server"
+  },
+  "dependencies": { "ws": "^8.18.0" },
+  "engines": { "node": ">=20" }
+}

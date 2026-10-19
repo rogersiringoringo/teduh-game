@@ -1,0 +1,7 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    { "name": "Buka game di Chrome (Live Server)", "type": "chrome", "request": "launch", "url": "http://localhost:5500", "webRoot": "${workspaceFolder}" },
+    { "name": "Jalankan server multiplayer", "type": "node", "request": "launch", "program": "${workspaceFolder}/server/server.js" }
+  ]
+}
