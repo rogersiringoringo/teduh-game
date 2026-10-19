@@ -49,8 +49,8 @@ function showMinorRestModal() {
 
 function startRestWalk() {
   toast('🚶 Mode jalan-jalan: gerakkan karakter untuk menjelajah!');
-  P.tx = 640;
-  P.ty = 400;
+  P.tx = IN ? 380 : 640;
+  P.ty = IN ? 460 : 400;
 }
 
 function startStretch() {

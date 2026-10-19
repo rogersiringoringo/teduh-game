@@ -180,7 +180,7 @@ function rnd(a) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-function blocked(x, y) {
+function blockedWorld(x, y) {
   if (x < 8 || y < 17 || x > WW - 8 || y > WH - 8) return true;
   for (const b of B) if (x > b[0] && x < b[0] + b[2] && y > b[1] && y < b[1] + b[3]) return true;
   for (const e of BEN) if (x > e[0] - 16 && x < e[0] + 16 && y > e[1] - 8 && y < e[1] + 14) return true;
@@ -191,6 +191,10 @@ function blocked(x, y) {
   )
     return true;
   return TR.some((t) => Math.hypot(t[0] - x, t[1] - y) < 9);
+}
+// Dispatcher tabrakan: dunia luar atau interior rumah
+function blocked(x, y) {
+  return IN ? blockedHome(x, y) : blockedWorld(x, y);
 }
 const pad = (x, y, p) =>
   [

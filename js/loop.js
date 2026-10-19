@@ -48,84 +48,91 @@ function loop() {
       }
     }
     if (F.on && (vx || vy || P.tx != null)) endFish();
-    NPC.forEach((n) => {
-      n.mv = Math.hypot(n.vx, n.vy) > 0.08;
-      if (n.mv) {
-        n.ph += 0.15;
-        if (Math.abs(n.vx) > 0.05) n.fx = n.vx < 0 ? -1 : 1;
-      }
-      if (Math.random() < 0.004) {
-        n.vx = (Math.random() - 0.5) * 0.8;
-        n.vy = (Math.random() - 0.5) * 0.8;
-      }
-      const nx = n.x + n.vx,
-        ny = n.y + n.vy;
-      if (blocked(nx, n.y)) {
-        n.vx *= -1;
-      } else n.x = nx;
-      if (blocked(n.x, ny)) {
-        n.vy *= -1;
-      } else n.y = ny;
-    });
-    cam.x = Math.max(0, Math.min(WW - VW, P.x - VW / 2));
-    cam.y = Math.max(0, Math.min(WH - VH, P.y - VH / 2));
-    c.drawImage(bg, cam.x * BS, cam.y * BS, VW * BS, VH * BS, 0, 0, VW, VH);
+    if (!IN)
+      NPC.forEach((n) => {
+        n.mv = Math.hypot(n.vx, n.vy) > 0.08;
+        if (n.mv) {
+          n.ph += 0.15;
+          if (Math.abs(n.vx) > 0.05) n.fx = n.vx < 0 ? -1 : 1;
+        }
+        if (Math.random() < 0.004) {
+          n.vx = (Math.random() - 0.5) * 0.8;
+          n.vy = (Math.random() - 0.5) * 0.8;
+        }
+        const nx = n.x + n.vx,
+          ny = n.y + n.vy;
+        if (blocked(nx, n.y)) {
+          n.vx *= -1;
+        } else n.x = nx;
+        if (blocked(n.x, ny)) {
+          n.vy *= -1;
+        } else n.y = ny;
+      });
+    // Batas kamera & sumber latar ikut scene (dunia luar atau interior rumah)
+    const MW = IN ? IW : WW,
+      MH = IN ? IH : WH;
+    cam.x = Math.max(0, Math.min(MW - VW, P.x - VW / 2));
+    cam.y = Math.max(0, Math.min(MH - VH, P.y - VH / 2));
+    c.drawImage(IN ? bgIn : bg, cam.x * BS, cam.y * BS, VW * BS, VH * BS, 0, 0, VW, VH);
     c.save();
     c.translate(-cam.x, -cam.y);
     const E = [];
-    PL.forEach((p, i) => E.push([p[1], () => txt(S.pl[i] ? '🌷' : '🌱', p[0], p[1])]));
-    STG.forEach((s) => E.push([s.y + 6, () => txt(s.icon, s.x, s.y - 10, 22)]));
-    NPC.forEach((n) =>
-      E.push([
-        n.y,
-        () =>
-          who(
-            n.x,
-            n.y,
-            { sh: n.sh, sk: n.sk, hs: n.hs, hc: n.hc, hat: 0, ph: n.ph, fx: n.fx, mv: n.mv },
-            n.n,
-          ),
-      ]),
-    );
-    peers.forEach((p) => {
-      if (p.isMe || muted.has(p.peer)) return;
-      const r = p.presence || {},
-        tx = +r.x,
-        ty = +r.y;
-      if (!isFinite(tx) || !isFinite(ty)) return;
-      const q = pp[p.peer] || (pp[p.peer] = { x: tx, y: ty, ph: 0, fx: 1, mv: 0 }),
-        dx = tx - q.x;
-      q.mv = Math.hypot(dx, ty - q.y) > 0.6 ? 1 : 0;
-      if (q.mv) {
-        q.ph += 0.28;
-        if (Math.abs(dx) > 0.3) q.fx = dx < 0 ? -1 : 1;
-      }
-      q.x += dx * 0.25;
-      q.y += (ty - q.y) * 0.25;
-      E.push([
-        q.y,
-        () => {
-          if (r.f) txt('🎣', q.x + q.fx * 13, q.y - 6, 14);
-          who(
-            q.x,
-            q.y,
-            {
-              sh: COL[r.c | 0] || COL[0],
-              sk: r.s | 0,
-              hs: r.a | 0,
-              hc: r.b | 0,
-              hat: r.h | 0,
-              ph: q.ph,
-              fx: q.fx,
-              mv: q.mv,
-              sit: (r.t | 0) > 0,
-            },
-            String(r.n || 'Teman').slice(0, 14),
-            bub[p.peer],
-          );
-        },
-      ]);
-    });
+    // Saat di dalam rumah, objek dunia luar disembunyikan
+    if (!IN) {
+      PL.forEach((p, i) => E.push([p[1], () => txt(S.pl[i] ? '🌷' : '🌱', p[0], p[1])]));
+      STG.forEach((s) => E.push([s.y + 6, () => txt(s.icon, s.x, s.y - 10, 22)]));
+      NPC.forEach((n) =>
+        E.push([
+          n.y,
+          () =>
+            who(
+              n.x,
+              n.y,
+              { sh: n.sh, sk: n.sk, hs: n.hs, hc: n.hc, hat: 0, ph: n.ph, fx: n.fx, mv: n.mv },
+              n.n,
+            ),
+        ]),
+      );
+      peers.forEach((p) => {
+        if (p.isMe || muted.has(p.peer)) return;
+        const r = p.presence || {},
+          tx = +r.x,
+          ty = +r.y;
+        if (!isFinite(tx) || !isFinite(ty)) return;
+        const q = pp[p.peer] || (pp[p.peer] = { x: tx, y: ty, ph: 0, fx: 1, mv: 0 }),
+          dx = tx - q.x;
+        q.mv = Math.hypot(dx, ty - q.y) > 0.6 ? 1 : 0;
+        if (q.mv) {
+          q.ph += 0.28;
+          if (Math.abs(dx) > 0.3) q.fx = dx < 0 ? -1 : 1;
+        }
+        q.x += dx * 0.25;
+        q.y += (ty - q.y) * 0.25;
+        E.push([
+          q.y,
+          () => {
+            if (r.f) txt('🎣', q.x + q.fx * 13, q.y - 6, 14);
+            who(
+              q.x,
+              q.y,
+              {
+                sh: COL[r.c | 0] || COL[0],
+                sk: r.s | 0,
+                hs: r.a | 0,
+                hc: r.b | 0,
+                hat: r.h | 0,
+                ph: q.ph,
+                fx: q.fx,
+                mv: q.mv,
+                sit: (r.t | 0) > 0,
+              },
+              String(r.n || 'Teman').slice(0, 14),
+              bub[p.peer],
+            );
+          },
+        ]);
+      });
+    }
     E.push([
       P.y,
       () =>
@@ -155,7 +162,7 @@ function loop() {
       c.fillStyle = 'rgba(20,20,70,' + a + ')';
       c.fillRect(0, 0, VW, VH);
     }
-    drawWeather();
+    if (!IN) drawWeather();
     updateAudio();
     updateCooking();
     // `c.restore()` di atas sudah membatalkan translate kamera, jadi overlay
@@ -163,14 +170,18 @@ function loop() {
     c.save();
     c.translate(-cam.x, -cam.y);
     drawEmote(now);
-    drawStage(now);
-    drawHouse();
+    if (!IN) {
+      drawStage(now);
+      drawHouse();
+    } else drawHomeGlow();
     c.restore();
     if (mo && F.on) endFish();
     near = mo || F.on ? null : P.sit != null ? STAND : nearest();
     if (F.on) fishUI();
     else actUp();
-    if (room && S.reg && now - lastP > 100) {
+    if (IN) homeHud();
+    // Saat di dalam rumah, jangan_siarkan posisi ke teman
+    if (room && S.reg && !IN && now - lastP > 100) {
       const o = {
           x: Math.round(P.x),
           y: Math.round(P.y),

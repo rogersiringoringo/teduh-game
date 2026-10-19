@@ -10,7 +10,7 @@ function ui() {
         const v = Math.min(S.m[m.id] || 0, m.n);
         return `<div class="card"><div class="row"><b>${S.d[m.id] ? '✅ ' : ''}${m.t}</b><span class="mut">+${m.k} token</span></div><div class="bar"><i style="width:${(v / m.n) * 100}%"></i></div></div>`;
       }).join('') +
-      '<div class="mut">Misi di-reset tiap hari. Maks. 55 token/hari.</div>' +
+      '<div class="mut">Misi di-reset tiap hari. Maks. 65 token/hari.</div>' +
       renderQuests() +
       renderFriendshipUI() +
       KOL();

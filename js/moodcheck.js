@@ -81,6 +81,8 @@ function moodResponse(mood) {
 
 function doMoodActivity(action) {
   closeM();
+  // Semua aktivitas ini berada di dunia luar
+  if (IN) exitHome();
   switch (action) {
     case 'walk_lake':
       toast('🚶 Yuk jalan ke danau!');
@@ -112,9 +114,16 @@ function doMoodActivity(action) {
       P.tx = LK.x;
       P.ty = LK.y + 60;
       break;
-    case 'read':
-      quote();
+    case 'read': {
+      // Cerita hanya bisa dibuka dari dalam Perpustakaan, jadi arahkan karakter ke sana
+      const lib = B.find((b) => b[7] === 'lib');
+      toast('📚 Yuk mampir ke Perpustakaan!');
+      if (lib) {
+        P.tx = lib[0] + lib[2] / 2;
+        P.ty = lib[1] + lib[3] + 20;
+      }
       break;
+    }
     case 'greet':
       toast('👋 Sapa teman di sekitar!');
       break;

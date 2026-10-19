@@ -18,11 +18,11 @@ function go(t) {
 }
 const ACT = {
   cafe: ['☕ Tulis jurnal perasaan', () => journal()],
-  home: ['🏠 Rumahmu', () => openHouse()],
+  home: ['🏠 Masuk ke rumah', () => enterHome()],
   clinic: ['🏥 Konsultasi profesional', () => go('k')],
   hall: ['🏛 Obrolan komunitas', () => go('c')],
   shop: ['🏪 Buka toko', () => go('s')],
-  lib: ['📚 Baca catatan di rak', () => quote()],
+  lib: ['📚 Buka perpustakaan', () => openLib()],
   cook: ['🍳 Masak di dapur', () => openCooking()],
 };
 const STAND = { k: 'stand', l: '🧍 Berdiri' + (TOUCH ? '' : ' (E / gerak)'), c: '', f: () => stand() },

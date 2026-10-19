@@ -15,6 +15,7 @@ let F = { on: 0, st: '', k: '' },
   S,
   tab = 'm',
   room = null,
+  IN = null,
   peers = [],
   muted = new Set(),
   bub = {},
@@ -54,6 +55,8 @@ function load() {
     pl: [],
     name: 'Teman' + ((100 + Math.random() * 900) | 0),
     jr: [],
+    br: {},
+    st: {},
   };
   if (!S || typeof S !== 'object') S = {};
   S = Object.assign({}, DEF, S);
@@ -67,6 +70,8 @@ function load() {
     S.fc = 0;
   }
   S.fish = S.fish || {};
+  S.br = S.br && typeof S.br == 'object' ? S.br : {};
+  S.st = S.st && typeof S.st == 'object' ? S.st : {};
   S.fc = S.fc | 0;
   S.sk = S.sk | 0;
   S.hs = S.hs | 0;
@@ -91,17 +96,20 @@ const K = {},
 function modal(h) {
   $('#md').innerHTML = h;
   $('#mo').style.display = 'flex';
+  $('#mo').className = '';
   for (const k in K) K[k] = 0;
 }
 function closeM() {
   clearInterval(bt);
   $('#mo').style.display = 'none';
+  $('#mo').className = '';
 }
 const MIS = [
   { id: 'mood', t: 'Check-in mood', n: 1, k: 10 },
   { id: 'talk', t: 'Ngobrol dengan 2 teman', n: 2, k: 15 },
   { id: 'water', t: 'Siram 3 tanaman', n: 3, k: 10 },
   { id: 'help', t: 'Beri 2 tanggapan suportif', n: 2, k: 20 },
+  { id: 'read', t: 'Baca 1 cerita di perpustakaan', n: 1, k: 10 },
 ];
 function prog(id) {
   const m = MIS.find((x) => x.id == id);

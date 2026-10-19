@@ -6,6 +6,7 @@ initRainDrops();
 initQuests();
 initFriendship();
 initHouse();
+initHome();
 initEvents();
 initRest();
 initMoodCheck();

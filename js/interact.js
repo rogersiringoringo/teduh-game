@@ -1,5 +1,6 @@
 // Deteksi objek terdekat yang bisa diajak interaksi
 function nearest() {
+  if (IN) return nearestHome();
   let b = null,
     bd = 34;
   const d = (x, y) => Math.hypot(x - P.x, y - P.y);

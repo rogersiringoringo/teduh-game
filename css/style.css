@@ -200,6 +200,16 @@ input[type='range'] {
   gap: 8px;
   align-items: center;
 }
+#rm {
+  display: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mut);
+  margin-bottom: 6px;
+}
+#rm.on {
+  display: block;
+}
 .tabs {
   display: flex;
   gap: 4px;
@@ -270,6 +280,27 @@ input[type='range'] {
 }
 #mo h3 {
   margin: 0 0 8px;
+}
+#mo.rd > div {
+  max-width: 540px;
+}
+#mo .rdh {
+  margin: 14px 0 2px;
+  font-size: 15px;
+}
+#mo .rd {
+  line-height: 1.8;
+  font-size: 15px;
+  margin: 10px 0;
+}
+#mo .rd.end {
+  font-style: italic;
+}
+#mo .opt {
+  text-align: left;
+  height: auto;
+  padding: 10px 12px;
+  line-height: 1.5;
 }
 .ch {
   display: flex;

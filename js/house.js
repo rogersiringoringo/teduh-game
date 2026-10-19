@@ -61,6 +61,7 @@ function buyDecor(id) {
   S.coins -= cost;
   houseDecorations.push(id);
   saveHouse();
+  renderInterior(); // dekorasi baru langsung muncul di dalam ruangan
   save();
   ui();
   toast(decor.icon + ' ' + decor.name + ' ditambahkan ke rumah!' + (discount < 1 ? ' (diskon 50%)' : ''));
